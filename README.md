@@ -1,4 +1,4 @@
-# ApplePicker
+# ApplePickerPrototype
 
 This project is an **Apple Picker** game prototype developed with Unity.
 
