@@ -125,3 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e47e3b38e0340a4e9cf1b775913af81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Basket
+  scoreCounter: {fileID: 0}
+  scorePopupPrefab: {fileID: 9216225758062930570, guid: bf1414e070c02e345a56514d0129c85e, type: 3}
