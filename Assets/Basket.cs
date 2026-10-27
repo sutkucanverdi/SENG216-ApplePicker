@@ -32,7 +32,6 @@ public class Basket : MonoBehaviour
             Destroy(collidedWith);
             scoreCounter.score += 100;
 
-            // Skorumuz rekoru geçtiyse HighScore'u güncelle
             HighScore.TRY_SET_HIGH_SCORE(scoreCounter.score);
         }
     }

@@ -6,7 +6,7 @@ using TMPro;
 public class HighScore : MonoBehaviour
 {
     static private TextMeshProUGUI _UI_TEXT;
-    static private int _SCORE = 1000;
+    static private int _SCORE = 0;
 
     private TextMeshProUGUI txtCom;
 
@@ -14,7 +14,6 @@ public class HighScore : MonoBehaviour
     {
         _UI_TEXT = this.GetComponent<TextMeshProUGUI>();
 
-        // Daha önce kaydedilmiþ rekor varsa yükle
         if (PlayerPrefs.HasKey("HighScore"))
         {
             SCORE = PlayerPrefs.GetInt("HighScore");

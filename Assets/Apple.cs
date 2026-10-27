@@ -12,7 +12,6 @@ public class Apple : MonoBehaviour
         {
             Destroy(this.gameObject);
 
-            // ApplePicker bileþenine ulaþ ve AppleMissed fonksiyonunu çaðýr
             ApplePicker apScript = Camera.main.GetComponent<ApplePicker>();
             apScript.AppleMissed();
         }

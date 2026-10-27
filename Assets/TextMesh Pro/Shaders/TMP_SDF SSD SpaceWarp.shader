@@ -33,7 +33,7 @@ Properties {
 
     _ReflectFaceColor   ("Reflection Color", Color) = (0,0,0,1)
     _ReflectOutlineColor("Reflection Color", Color) = (0,0,0,1)
-    _Cube               ("Reflection Cubemap", Cube) = "black" { /* TexGen CubeReflect */ }
+    _Cube               ("Reflection Cubemap", Cube) = "black" {  }
     _EnvMatrixRotation  ("Texture Rotation", vector) = (0, 0, 0, 0)
 
 

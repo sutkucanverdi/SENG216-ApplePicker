@@ -1,8 +1,3 @@
-// Simplified SDF shader:
-// - No Shading Option (bevel / bump / env map)
-// - No Glow Option
-// - Softness is applied on both side of the outline
-// - Screen-space derivative based SDF scaling with SpaceWarp motion vectors
 
 Shader "TextMeshPro/Mobile/Distance Field SSD - SpaceWarp" {
 

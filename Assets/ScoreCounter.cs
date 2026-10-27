@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // TextMeshPro desteði
+using TMPro;
 
 public class ScoreCounter : MonoBehaviour
 {

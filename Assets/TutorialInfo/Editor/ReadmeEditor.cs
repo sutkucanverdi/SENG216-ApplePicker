@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 using Unity.Scripting.LifecycleManagement;
@@ -74,14 +74,12 @@ sealed partial class ReadmeEditor : Editor
             return created;
         }
 
-        //Header
         VisualElement title = new();
         title.AddToClassList("title");
         title.Add(ChainWithClass(new Image { image = readme.icon }, "title__icon"));
         title.Add(ChainWithClass(new Label(readme.title), "title__text"));
         root.Add(title);
 
-        //Content
         foreach (var section in readme.sections)
         {
             VisualElement part = new();

@@ -21,12 +21,10 @@ public class ApplePicker : MonoBehaviour
 
     void Start()
     {
-        // Oyunu baþlangýçta dondur ve Start ekranýný aç
         Time.timeScale = 0f;
         startPanel.SetActive(true);
         gameOverPanel.SetActive(false);
 
-        // Sepetleri oluþtur
         basketList = new List<GameObject>();
         for (int i = 0; i < numBaskets; i++)
         {
@@ -37,7 +35,6 @@ public class ApplePicker : MonoBehaviour
             basketList.Add(tBasketGO);
         }
 
-        // Skor sayacýný bul
         GameObject scoreGO = GameObject.Find("ScoreCounter");
         if (scoreGO != null)
         {
@@ -45,14 +42,12 @@ public class ApplePicker : MonoBehaviour
         }
     }
 
-    // Oyna butonuna basýlýnca çalýþacak fonksiyon
     public void StartGame()
     {
         startPanel.SetActive(false);
-        Time.timeScale = 1f; // Oyunu baþlat
+        Time.timeScale = 1f;
     }
 
-    // Yeniden Baþla butonuna basýlýnca çalýþacak fonksiyon
     public void RestartGame()
     {
         Time.timeScale = 1f;
@@ -61,20 +56,17 @@ public class ApplePicker : MonoBehaviour
 
     public void AppleMissed()
     {
-        // Ekrandaki tüm elmalarý temizle
         GameObject[] appleArray = GameObject.FindGameObjectsWithTag("Apple");
         foreach (GameObject tempGO in appleArray)
         {
             Destroy(tempGO);
         }
 
-        // En üstteki sepeti yok et
         int basketIndex = basketList.Count - 1;
         GameObject basketGO = basketList[basketIndex];
         basketList.RemoveAt(basketIndex);
         Destroy(basketGO);
 
-        // Eðer sepet bittiyse GameOver panelini aç ve oyunu dondur
         if (basketList.Count == 0)
         {
             Time.timeScale = 0f;

@@ -1,7 +1,3 @@
-// Simplified SDF shader:
-// - No Shading Option (bevel / bump / env map)
-// - No Glow Option
-// - Softness is applied on both side of the outline
 
 Shader "TextMeshPro/Mobile/Distance Field - SpaceWarp" {
 
@@ -110,12 +106,12 @@ SubShader {
 			float4	vertex			: SV_POSITION;
 			fixed4	faceColor		: COLOR;
 			fixed4	outlineColor	: COLOR1;
-			float4	texcoord0		: TEXCOORD0;			// Texture UV, Mask UV
-			half4	param			: TEXCOORD1;			// Scale(x), BiasIn(y), BiasOut(z), Bias(w)
-			half4	mask			: TEXCOORD2;			// Position in clip space(xy), Softness(zw)
+			float4	texcoord0		: TEXCOORD0;
+			half4	param			: TEXCOORD1;
+			half4	mask			: TEXCOORD2;
 			#if (UNDERLAY_ON | UNDERLAY_INNER)
-			float4	texcoord1		: TEXCOORD3;			// Texture UV, alpha, reserved
-			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)
+			float4	texcoord1		: TEXCOORD3;
+			half2	underlayParam	: TEXCOORD4;
 			#endif
 		};
 
@@ -181,11 +177,9 @@ SubShader {
 			float2 layerOffset = float2(x, y);
 			#endif
 
-			// Generate UV for the Masking Texture
 			float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
 			float2 maskUV = (vert.xy - clampedRect.xy) / (clampedRect.zw - clampedRect.xy);
 
-			// Populate structure for pixel shader
 			output.vertex = vPosition;
 			output.faceColor = faceColor;
 			output.outlineColor = outlineColor;
@@ -203,7 +197,6 @@ SubShader {
 		}
 
 
-		// PIXEL SHADER
 		fixed4 PixShader(pixel_t input) : SV_Target
 		{
 			UNITY_SETUP_INSTANCE_ID(input);
@@ -227,7 +220,6 @@ SubShader {
 			c += float4(_UnderlayColor.rgb * _UnderlayColor.a, _UnderlayColor.a) * (1 - saturate(d - input.underlayParam.y)) * sd * (1 - c.a);
 			#endif
 
-			// Alternative implementation to UnityGet2DClipping with support for softness.
 			#if UNITY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			c *= m.x * m.y;
@@ -292,12 +284,12 @@ SubShader {
             float4 previousPositionCSNoJitter : PREV_POSITION_CS_NO_JITTER;
 			fixed4	faceColor		: COLOR;
 			fixed4	outlineColor	: COLOR1;
-			float4	texcoord0		: TEXCOORD0;			// Texture UV, Mask UV
-			half4	param			: TEXCOORD1;			// Scale(x), BiasIn(y), BiasOut(z), Bias(w)
-			half4	mask			: TEXCOORD2;			// Position in clip space(xy), Softness(zw)
+			float4	texcoord0		: TEXCOORD0;
+			half4	param			: TEXCOORD1;
+			half4	mask			: TEXCOORD2;
 			#if (UNDERLAY_ON | UNDERLAY_INNER)
-			float4	texcoord1		: TEXCOORD3;			// Texture UV, alpha, reserved
-			half2	underlayParam	: TEXCOORD4;			// Scale(x), Bias(y)
+			float4	texcoord1		: TEXCOORD3;
+			half2	underlayParam	: TEXCOORD4;
 			#endif
 		};
 
@@ -322,7 +314,6 @@ SubShader {
 			float4 oldvert = input.oldvertex;
 			oldvert.x += _VertexOffsetX;
 			oldvert.y += _VertexOffsetY;
-            // We do not need jittered position in ASW
 			float4 vPosition = mul(_NonJitteredViewProjMatrix, mul(UNITY_MATRIX_M, vert));
             output.positionCSNoJitter = vPosition;
             output.previousPositionCSNoJitter = mul(_PrevViewProjMatrix, mul(UNITY_PREV_MATRIX_M, oldvert));
@@ -369,11 +360,9 @@ SubShader {
 			float2 layerOffset = float2(x, y);
 			#endif
 
-			// Generate UV for the Masking Texture
 			float4 clampedRect = clamp(_ClipRect, -2e10, 2e10);
 			float2 maskUV = (vert.xy - clampedRect.xy) / (clampedRect.zw - clampedRect.xy);
 
-			// Populate structure for pixel shader
 			output.vertex = vPosition;
 			output.faceColor = faceColor;
 			output.outlineColor = outlineColor;
@@ -391,7 +380,6 @@ SubShader {
 		}
 
 
-		// PIXEL SHADER
 		float4 PixShader(pixel_t input) : SV_Target
 		{
 			UNITY_SETUP_INSTANCE_ID(input);
@@ -415,7 +403,6 @@ SubShader {
 			c += float4(_UnderlayColor.rgb * _UnderlayColor.a, _UnderlayColor.a) * (1 - saturate(d - input.underlayParam.y)) * sd * (1 - c.a);
 			#endif
 
-			// Alternative implementation to UnityGet2DClipping with support for softness.
 			#if UNITY_UI_CLIP_RECT
 			half2 m = saturate((_ClipRect.zw - _ClipRect.xy - abs(input.mask.xy)) * input.mask.zw);
 			c *= m.x * m.y;
@@ -431,7 +418,6 @@ SubShader {
             float3 prevPosNDC = input.previousPositionCSNoJitter.xyz * rcp(input.previousPositionCSNoJitter.w);
 
             float3 velocity;
-            // Calculate forward velocity
             velocity = (posNDC.xyz - prevPosNDC.xyz);
 
             #if UNITY_UV_STARTS_AT_TOP
